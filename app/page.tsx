@@ -24,6 +24,8 @@ import {
   RiErrorWarningLine,
   RiMenuFoldLine,
   RiMenuUnfoldLine,
+  RiShieldCheckLine,
+  RiFlashlightLine,
 } from 'react-icons/ri'
 
 import InputSection from './sections/InputSection'
@@ -33,6 +35,17 @@ import StrategiesTab from './sections/StrategiesTab'
 
 const AGENT_ID = '69a27b508e6d0e51fd5cd391'
 
+interface DimensionAnalyzed {
+  dimension?: string
+  finding?: string
+}
+
+interface KeyMetric {
+  metric_name?: string
+  value?: string
+  insight?: string
+}
+
 interface Segment {
   segment_name?: string
   size_estimate?: string
@@ -41,6 +54,28 @@ interface Segment {
   avg_clv_range?: string
   characteristics?: string[]
   description?: string
+  engagement_score?: string
+  channel_preferences?: string
+  product_affinity?: string
+  lifecycle_stage?: string
+  key_differentiators?: string[]
+}
+
+interface RiskFactor {
+  factor?: string
+  impact?: string
+  correlation?: string
+}
+
+interface RiskDistribution {
+  dimension?: string
+  breakdown?: string
+}
+
+interface EarlyWarning {
+  signal?: string
+  timeframe?: string
+  reliability?: string
 }
 
 interface RiskGroup {
@@ -51,6 +86,16 @@ interface RiskGroup {
   warning_signs?: string[]
   engagement_decline?: string
   recommended_action?: string
+  revenue_impact?: string
+  behavioral_velocity?: string
+  contributing_factors?: string[]
+}
+
+interface QuickWin {
+  action?: string
+  target?: string
+  expected_result?: string
+  effort?: string
 }
 
 interface Strategy {
@@ -61,12 +106,20 @@ interface Strategy {
   expected_impact?: string
   detailed_tactics?: string
   priority?: string
+  timeline?: string
+  success_metrics?: string
+  channel_recommendations?: string
+  personalization_approach?: string
+  roi_projection?: string
 }
 
 interface ManagerResponse {
   segmentation?: {
     segments?: Segment[]
     summary?: string
+    dimensions_analyzed?: DimensionAnalyzed[]
+    key_metrics?: KeyMetric[]
+    cross_segment_comparison?: string
   }
   churn_risk?: {
     risk_groups?: RiskGroup[]
@@ -74,12 +127,26 @@ interface ManagerResponse {
     average_risk_score?: string
     highest_risk_segment?: string
     summary?: string
+    revenue_at_risk?: string
+    risk_factors?: RiskFactor[]
+    risk_distribution?: RiskDistribution[]
+    early_warnings?: EarlyWarning[]
   }
   retention_strategies?: {
     strategies?: Strategy[]
     summary?: string
+    strategy_matrix?: string
+    prioritized_roadmap?: string
+    quick_wins?: QuickWin[]
   }
   executive_summary?: string
+  data_quality?: {
+    completeness?: string
+    dimensions_covered?: number
+    confidence_level?: string
+    data_points_analyzed?: string
+  }
+  cross_cutting_insights?: string[]
 }
 
 const SAMPLE_DATA: ManagerResponse = {
@@ -93,6 +160,11 @@ const SAMPLE_DATA: ManagerResponse = {
         avg_clv_range: '$4,200 - $8,500',
         characteristics: ['Brand Advocates', 'Premium Tier', 'Low Churn Risk'],
         description: 'Core revenue drivers who consistently engage across channels and product lines. They respond well to exclusivity and early access programs.',
+        engagement_score: '92/100',
+        channel_preferences: 'Email (45%), Mobile App (35%), In-Store (20%)',
+        product_affinity: 'Premium categories, new launches, seasonal collections',
+        lifecycle_stage: 'Active Loyal',
+        key_differentiators: ['3.2x higher AOV than average', 'NPS score 78+', '85% email open rate', 'Multi-channel engagement'],
       },
       {
         segment_name: 'Price-Sensitive Browsers',
@@ -102,6 +174,11 @@ const SAMPLE_DATA: ManagerResponse = {
         avg_clv_range: '$600 - $1,800',
         characteristics: ['Deal Seekers', 'Moderate Engagement', 'Medium Churn Risk'],
         description: 'Engaged during promotions but less active during regular pricing periods. Converting them to regular buyers requires targeted incentive programs.',
+        engagement_score: '54/100',
+        channel_preferences: 'Social Media (40%), Web (35%), Email (25%)',
+        product_affinity: 'Sale items, bundles, clearance categories',
+        lifecycle_stage: 'Active At-Risk',
+        key_differentiators: ['4.8x browse-to-buy ratio', 'Peak activity during sales events', '68% coupon redemption rate'],
       },
       {
         segment_name: 'New & At-Risk Cohort',
@@ -111,9 +188,31 @@ const SAMPLE_DATA: ManagerResponse = {
         avg_clv_range: '$150 - $600',
         characteristics: ['New Customers', 'Onboarding Phase', 'High Churn Risk'],
         description: 'Recently acquired customers with limited engagement history. Critical window for establishing purchase habits and brand loyalty.',
+        engagement_score: '28/100',
+        channel_preferences: 'Mobile App (60%), Social Media (30%), Web (10%)',
+        product_affinity: 'Entry-level products, trending items',
+        lifecycle_stage: 'New Onboarding',
+        key_differentiators: ['78% single-purchase customers', 'Average 1.2 sessions per week', 'High social referral rate'],
       },
     ],
-    summary: 'Analysis reveals three distinct customer segments with varying CLV potential and engagement patterns. The High-Value Loyalist segment drives disproportionate revenue despite representing only 18% of the customer base.',
+    summary: 'Analysis across 12 dimensions reveals three distinct customer segments with varying CLV potential and engagement patterns. The High-Value Loyalist segment drives disproportionate revenue despite representing only 18% of the customer base.',
+    dimensions_analyzed: [
+      { dimension: 'Purchase Frequency', finding: 'Bimodal distribution with peaks at 1-2 and 8-12 purchases per quarter' },
+      { dimension: 'Average Order Value', finding: 'Top 18% accounts for 52% of total revenue' },
+      { dimension: 'Channel Engagement', finding: 'Mobile-first users show 2.3x higher browse rate but 40% lower conversion' },
+      { dimension: 'Product Category Breadth', finding: 'Multi-category shoppers have 3.5x higher retention rates' },
+      { dimension: 'Recency', finding: '25% of base has not purchased in 60+ days' },
+      { dimension: 'Geographic Distribution', finding: 'Urban customers show 1.8x higher engagement scores' },
+      { dimension: 'Seasonal Patterns', finding: 'Q4 drives 38% of annual revenue, Q1 sees highest churn' },
+      { dimension: 'Price Sensitivity Index', finding: '32% of base purchases exclusively during promotional periods' },
+    ],
+    key_metrics: [
+      { metric_name: 'Total Segments', value: '3', insight: 'Distinct behavioral clusters identified' },
+      { metric_name: 'Avg. CLV', value: '$2,430', insight: 'Weighted across all segments' },
+      { metric_name: 'Engagement Index', value: '58/100', insight: 'Below industry benchmark of 65' },
+      { metric_name: 'Dimensions Analyzed', value: '12', insight: 'Comprehensive multi-dimensional clustering' },
+    ],
+    cross_segment_comparison: 'High-Value Loyalists generate 4.2x more revenue per customer than Price-Sensitive Browsers and 11.3x more than the New & At-Risk Cohort. However, the Price-Sensitive segment represents the largest growth opportunity with a 32% conversion potential to mid-tier through targeted nurturing. Channel preferences diverge significantly: loyalists prefer email, browsers engage via social, and new cohorts are mobile-dominant.',
   },
   churn_risk: {
     risk_groups: [
@@ -125,6 +224,9 @@ const SAMPLE_DATA: ManagerResponse = {
         warning_signs: ['Support ticket escalation pattern', 'Competitor product research detected', 'Declining NPS scores'],
         engagement_decline: '62% decline over the last quarter',
         recommended_action: 'Immediate executive outreach with personalized retention offer. Schedule account review within 48 hours.',
+        revenue_impact: '$1.2M annual revenue at risk',
+        behavioral_velocity: 'Accelerating decline - 3x faster disengagement vs. prior quarter',
+        contributing_factors: ['Product quality complaints', 'Pricing perception shift', 'Competitor promotional activity'],
       },
       {
         group_name: 'Lapsed Mid-Tier',
@@ -134,6 +236,9 @@ const SAMPLE_DATA: ManagerResponse = {
         warning_signs: ['Subscription downgrade inquiries', 'Reduced session duration'],
         engagement_decline: '38% decline over last 6 weeks',
         recommended_action: 'Deploy automated win-back campaign with personalized product recommendations based on prior purchase history.',
+        revenue_impact: '$480K annual revenue at risk',
+        behavioral_velocity: 'Steady decline - consistent 6% week-over-week reduction',
+        contributing_factors: ['Promotional fatigue', 'Category saturation', 'Seasonal disengagement'],
       },
       {
         group_name: 'Stable Low-Value',
@@ -141,14 +246,39 @@ const SAMPLE_DATA: ManagerResponse = {
         risk_level: 'Low',
         churn_indicators: ['Flat engagement metrics', 'No upsell response'],
         warning_signs: ['Limited cross-category exploration'],
-        engagement_decline: '12% decline — within normal range',
+        engagement_decline: '12% decline -- within normal range',
         recommended_action: 'Focus on incremental engagement through content marketing and community building. Low urgency intervention.',
+        revenue_impact: '$95K annual revenue at risk',
+        behavioral_velocity: 'Stable - fluctuations within normal seasonal range',
+        contributing_factors: ['Low product awareness', 'Single-category attachment'],
       },
     ],
     total_at_risk: '2,340 customers',
     average_risk_score: '5.9/10',
     highest_risk_segment: 'Disengaged High-Value',
-    summary: 'Churn analysis identifies 2,340 customers at measurable risk, with the Disengaged High-Value group representing the greatest potential revenue loss. Immediate intervention is recommended for the high-risk cohort.',
+    summary: 'Churn analysis across 10 risk dimensions identifies 2,340 customers at measurable risk, with the Disengaged High-Value group representing the greatest potential revenue loss of $1.2M annually. Immediate intervention is recommended for the high-risk cohort.',
+    revenue_at_risk: '$1.78M',
+    risk_factors: [
+      { factor: 'Purchase Frequency Decline', impact: 'High', correlation: '0.87' },
+      { factor: 'Email Engagement Drop', impact: 'High', correlation: '0.82' },
+      { factor: 'Support Ticket Volume', impact: 'Medium', correlation: '0.71' },
+      { factor: 'Session Duration Decrease', impact: 'Medium', correlation: '0.68' },
+      { factor: 'Cart Abandonment Rate', impact: 'Medium', correlation: '0.64' },
+      { factor: 'NPS Score Trajectory', impact: 'High', correlation: '0.79' },
+    ],
+    risk_distribution: [
+      { dimension: 'By Revenue Tier', breakdown: 'High-value: 35% at risk, Mid-tier: 28% at risk, Low-value: 15% at risk' },
+      { dimension: 'By Tenure', breakdown: '0-6 months: 42% at risk, 6-24 months: 22% at risk, 24+ months: 18% at risk' },
+      { dimension: 'By Channel', breakdown: 'Web-only: 38% at risk, Mobile: 25% at risk, Multi-channel: 12% at risk' },
+      { dimension: 'By Geography', breakdown: 'Suburban: 31% at risk, Urban: 19% at risk, Rural: 27% at risk' },
+    ],
+    early_warnings: [
+      { signal: 'Login frequency drops below 1x per week', timeframe: '14-21 days before churn', reliability: 'High' },
+      { signal: 'Email open rate falls below 10%', timeframe: '30 days before churn', reliability: 'High' },
+      { signal: 'Cart abandonment exceeds 3 consecutive sessions', timeframe: '7-10 days before churn', reliability: 'Medium' },
+      { signal: 'Support ticket sentiment shifts negative', timeframe: '21-30 days before churn', reliability: 'Medium' },
+      { signal: 'Loyalty points stop accruing', timeframe: '45 days before churn', reliability: 'High' },
+    ],
   },
   retention_strategies: {
     strategies: [
@@ -160,29 +290,65 @@ const SAMPLE_DATA: ManagerResponse = {
         expected_impact: '35-45% re-engagement rate within 30 days',
         detailed_tactics: 'Deploy a three-touch outreach sequence: Day 1 - personal email from VP of Customer Success acknowledging their loyalty; Day 3 - phone call with tailored offer; Day 7 - exclusive access to new product launch. Track engagement at each touchpoint and escalate if no response by Day 10.',
         priority: 'High',
+        timeline: 'Immediate -- first 48 hours critical',
+        success_metrics: 'Re-engagement rate, revenue recovery %, NPS improvement',
+        channel_recommendations: 'Direct phone, personal email, in-app notification',
+        personalization_approach: 'Account history review, purchase pattern analysis, personalized product bundles based on past favorites',
+        roi_projection: '8.5x return on retention investment, $1.02M potential recovery',
       },
       {
-        strategy_type: 'Win-Back',
+        strategy_type: 'Win-Back Campaign',
         target_segment: 'Lapsed Mid-Tier',
         risk_level: 'Medium',
         action_steps: ['Launch automated email sequence with dynamic content', 'Offer tiered discount structure (10/15/20%)', 'Retarget with social ads featuring viewed products', 'Provide free shipping on next order'],
         expected_impact: '20-30% conversion rate for win-back campaign',
         detailed_tactics: 'Implement a 21-day win-back journey: Week 1 - "We miss you" email with personalized product picks; Week 2 - increasing discount offer + social proof testimonials; Week 3 - final urgency message with best offer. A/B test subject lines and offer structures across cohorts.',
         priority: 'Medium',
+        timeline: '21-day campaign cycle with weekly escalation',
+        success_metrics: 'Win-back conversion rate, second purchase rate, campaign ROI',
+        channel_recommendations: 'Email automation, social retargeting, SMS (opt-in)',
+        personalization_approach: 'Viewed-product recommendations, browsing behavior matching, dynamic discount thresholds',
+        roi_projection: '4.2x return, $144K potential recovery',
       },
       {
-        strategy_type: 'Early Warning',
+        strategy_type: 'Early Warning System',
         target_segment: 'New & At-Risk Cohort',
         risk_level: 'High',
         action_steps: ['Implement onboarding email nurture sequence', 'Trigger alerts when engagement drops below threshold', 'Offer new customer welcome bundle', 'Enable in-app guided product discovery'],
         expected_impact: '50-60% improvement in 90-day retention',
         detailed_tactics: 'Create a 30-day onboarding program with milestone rewards: First purchase celebration, second purchase discount, category exploration incentive, and loyalty program enrollment prompt. Monitor daily active usage and trigger intervention if engagement score drops below 40.',
         priority: 'High',
+        timeline: '30-day onboarding program with ongoing monitoring',
+        success_metrics: '90-day retention rate, second purchase rate, engagement score trajectory',
+        channel_recommendations: 'Mobile push, in-app messaging, email onboarding sequence',
+        personalization_approach: 'First-purchase category expansion suggestions, peer behavior benchmarking, progressive profiling',
+        roi_projection: '6.1x return, estimated $210K in preserved CLV',
       },
     ],
-    summary: 'Three targeted retention strategies address each identified risk tier. Priority should be given to the Proactive Outreach strategy for disengaged high-value customers, followed by the Early Warning system for new customer retention.',
+    summary: 'Three targeted retention strategies address each identified risk tier with measurable ROI projections. Combined potential recovery is $1.37M with an average 6.3x return on retention investment.',
+    strategy_matrix: 'Coverage spans all three risk tiers: High-risk (Proactive Outreach) targets 15% of at-risk base with highest per-customer ROI; Medium-risk (Win-Back) addresses 45% of at-risk volume; High-frequency (Early Warning) prevents 40% of new customer churn through systematic onboarding. No coverage gaps identified across the current segmentation model.',
+    prioritized_roadmap: 'Week 1-2: Launch Proactive Outreach for Disengaged High-Value (immediate revenue impact)\nWeek 2-3: Deploy Early Warning System for New Cohort (prevent future churn)\nWeek 3-4: Activate Win-Back Campaign for Lapsed Mid-Tier (volume recovery)\nWeek 5-8: Measure, optimize, and iterate across all three programs\nWeek 9-12: Scale successful tactics and introduce cross-segment learnings',
+    quick_wins: [
+      { action: 'Send personalized re-engagement email to top 50 at-risk high-value customers', target: 'Disengaged High-Value', expected_result: '15-20% immediate response rate', effort: 'Low' },
+      { action: 'Activate abandoned cart recovery sequence', target: 'Lapsed Mid-Tier', expected_result: '8-12% cart recovery rate', effort: 'Low' },
+      { action: 'Push welcome discount to new customers with no second purchase after 14 days', target: 'New & At-Risk Cohort', expected_result: '25% second purchase conversion', effort: 'Minimal' },
+      { action: 'Enable loyalty points expiration reminder notifications', target: 'All Segments', expected_result: '10% uplift in loyalty program engagement', effort: 'Low' },
+    ],
   },
-  executive_summary: 'Customer analytics reveals a base with strong polarization: 18% of customers drive the majority of revenue, while 25% of recently acquired customers are at significant churn risk. Immediate action is recommended for the 2,340 at-risk customers, with particular focus on the Disengaged High-Value segment where potential revenue loss is highest. Three targeted retention strategies have been developed, prioritizing proactive outreach for high-value customers and early intervention for new cohorts.',
+  executive_summary: 'Multi-dimensional customer analytics across 12 data dimensions reveals a base with strong polarization: 18% of customers drive the majority of revenue, while 25% of recently acquired customers are at significant churn risk. Total revenue at risk is $1.78M annually across 2,340 at-risk customers. Three targeted retention strategies with a combined ROI projection of 6.3x have been developed, with immediate priority on proactive outreach for the Disengaged High-Value segment ($1.2M at stake). Early warning systems for new customer retention and automated win-back campaigns complete the strategic framework.',
+  data_quality: {
+    completeness: '94%',
+    dimensions_covered: 12,
+    confidence_level: 'High',
+    data_points_analyzed: '48,500+',
+  },
+  cross_cutting_insights: [
+    'Multi-channel customers show 3.5x higher retention rates regardless of segment, suggesting channel diversification should be a universal strategy.',
+    'Mobile-first users have the highest acquisition rate but lowest retention, indicating a mobile experience gap requiring immediate attention.',
+    'Seasonal purchase patterns strongly correlate with churn timing -- Q1 post-holiday sees 2.4x higher churn than other quarters.',
+    'Customers who engage with loyalty programs within their first 30 days have 68% higher 12-month retention.',
+    'Support ticket volume is a leading indicator of churn with 0.71 correlation, suggesting proactive support outreach could reduce churn by 15-20%.',
+  ],
 }
 
 class ErrorBoundary extends React.Component<
@@ -431,6 +597,69 @@ export default function Page() {
                 </Card>
               )}
 
+              {/* Data Quality & Cross-Cutting Insights */}
+              {displayData && (displayData.data_quality || (Array.isArray(displayData.cross_cutting_insights) && displayData.cross_cutting_insights.length > 0)) && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Data Quality */}
+                  {displayData.data_quality && (
+                    <Card className="border-border bg-card">
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <RiShieldCheckLine className="h-4 w-4" style={{ color: 'hsl(36, 60%, 31%)' }} />
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Data Quality Assessment</p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          {displayData.data_quality.completeness && (
+                            <div className="space-y-0.5">
+                              <p className="text-xs text-muted-foreground">Completeness</p>
+                              <p className="text-sm font-mono font-semibold text-foreground">{displayData.data_quality.completeness}</p>
+                            </div>
+                          )}
+                          {displayData.data_quality.dimensions_covered != null && (
+                            <div className="space-y-0.5">
+                              <p className="text-xs text-muted-foreground">Dimensions Covered</p>
+                              <p className="text-sm font-mono font-semibold text-foreground">{displayData.data_quality.dimensions_covered}</p>
+                            </div>
+                          )}
+                          {displayData.data_quality.confidence_level && (
+                            <div className="space-y-0.5">
+                              <p className="text-xs text-muted-foreground">Confidence Level</p>
+                              <p className="text-sm font-medium text-foreground">{displayData.data_quality.confidence_level}</p>
+                            </div>
+                          )}
+                          {displayData.data_quality.data_points_analyzed && (
+                            <div className="space-y-0.5">
+                              <p className="text-xs text-muted-foreground">Data Points</p>
+                              <p className="text-sm font-mono font-semibold text-foreground">{displayData.data_quality.data_points_analyzed}</p>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Cross-Cutting Insights */}
+                  {Array.isArray(displayData.cross_cutting_insights) && displayData.cross_cutting_insights.length > 0 && (
+                    <Card className="border-border bg-card">
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <RiFlashlightLine className="h-4 w-4" style={{ color: 'hsl(36, 60%, 31%)' }} />
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cross-Cutting Insights</p>
+                        </div>
+                        <ul className="space-y-2">
+                          {displayData.cross_cutting_insights.map((insight, idx) => (
+                            <li key={idx} className="text-xs text-foreground flex items-start gap-2 leading-relaxed">
+                              <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: 'hsl(36, 60%, 31%)' }} />
+                              {insight}
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              )}
+
               {/* Input Section */}
               <InputSection
                 customerData={customerData}
@@ -487,6 +716,9 @@ export default function Page() {
                     <SegmentsTab
                       segments={Array.isArray(displayData?.segmentation?.segments) ? displayData.segmentation.segments : []}
                       summary={displayData?.segmentation?.summary ?? ''}
+                      dimensionsAnalyzed={Array.isArray(displayData?.segmentation?.dimensions_analyzed) ? displayData.segmentation.dimensions_analyzed : []}
+                      keyMetrics={Array.isArray(displayData?.segmentation?.key_metrics) ? displayData.segmentation.key_metrics : []}
+                      crossSegmentComparison={displayData?.segmentation?.cross_segment_comparison}
                     />
                   </TabsContent>
 
@@ -497,6 +729,10 @@ export default function Page() {
                       averageRiskScore={displayData?.churn_risk?.average_risk_score ?? ''}
                       highestRiskSegment={displayData?.churn_risk?.highest_risk_segment ?? ''}
                       summary={displayData?.churn_risk?.summary ?? ''}
+                      revenueAtRisk={displayData?.churn_risk?.revenue_at_risk}
+                      riskFactors={Array.isArray(displayData?.churn_risk?.risk_factors) ? displayData.churn_risk.risk_factors : []}
+                      riskDistribution={Array.isArray(displayData?.churn_risk?.risk_distribution) ? displayData.churn_risk.risk_distribution : []}
+                      earlyWarnings={Array.isArray(displayData?.churn_risk?.early_warnings) ? displayData.churn_risk.early_warnings : []}
                     />
                   </TabsContent>
 
@@ -504,6 +740,9 @@ export default function Page() {
                     <StrategiesTab
                       strategies={Array.isArray(displayData?.retention_strategies?.strategies) ? displayData.retention_strategies.strategies : []}
                       summary={displayData?.retention_strategies?.summary ?? ''}
+                      strategyMatrix={displayData?.retention_strategies?.strategy_matrix}
+                      prioritizedRoadmap={displayData?.retention_strategies?.prioritized_roadmap}
+                      quickWins={Array.isArray(displayData?.retention_strategies?.quick_wins) ? displayData.retention_strategies.quick_wins : []}
                     />
                   </TabsContent>
                 </Tabs>
