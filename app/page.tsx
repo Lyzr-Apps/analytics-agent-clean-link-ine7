@@ -22,6 +22,8 @@ import {
   RiSparklingLine,
   RiCheckboxCircleLine,
   RiErrorWarningLine,
+  RiMenuFoldLine,
+  RiMenuUnfoldLine,
 } from 'react-icons/ri'
 
 import InputSection from './sections/InputSection'
@@ -245,6 +247,7 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState('segments')
   const [showSample, setShowSample] = useState(false)
   const [activeAgentId, setActiveAgentId] = useState<string | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const displayData = showSample ? SAMPLE_DATA : analysisData
 
@@ -300,38 +303,85 @@ export default function Page() {
     <ErrorBoundary>
       <div className="min-h-screen bg-background text-foreground flex">
         {/* Sidebar */}
-        <aside className="hidden md:flex flex-col w-56 border-r border-border bg-card flex-shrink-0">
-          <div className="p-5 space-y-1">
-            <div className="flex items-center gap-2">
-              <RiBarChartLine className="h-5 w-5" style={{ color: 'hsl(36, 60%, 31%)' }} />
-              <h1 className="font-serif text-base font-semibold text-foreground tracking-wide">Analytics</h1>
-            </div>
-            <p className="text-xs text-muted-foreground">Retention Intelligence</p>
+        <aside
+          className={`hidden md:flex flex-col border-r border-border bg-card flex-shrink-0 transition-all duration-300 ease-in-out ${
+            sidebarOpen ? 'w-56' : 'w-16'
+          }`}
+        >
+          {/* Logo / Brand */}
+          <div className={`flex items-center ${sidebarOpen ? 'p-5 justify-between' : 'p-3 justify-center'}`}>
+            {sidebarOpen ? (
+              <div className="space-y-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <RiBarChartLine className="h-5 w-5 flex-shrink-0" style={{ color: 'hsl(36, 60%, 31%)' }} />
+                  <h1 className="font-serif text-base font-semibold text-foreground tracking-wide truncate">Analytics</h1>
+                </div>
+                <p className="text-xs text-muted-foreground truncate">Retention Intelligence</p>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <RiBarChartLine className="h-5 w-5" style={{ color: 'hsl(36, 60%, 31%)' }} />
+              </div>
+            )}
           </div>
+
+          {/* Collapse Toggle */}
+          <div className={`px-3 pb-2 ${sidebarOpen ? '' : 'flex justify-center'}`}>
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"
+              title={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            >
+              {sidebarOpen ? (
+                <RiMenuFoldLine className="h-4 w-4" />
+              ) : (
+                <RiMenuUnfoldLine className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+
           <Separator className="bg-border" />
+
+          {/* Navigation */}
           <nav className="flex-1 p-3">
-            <div className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-secondary/60 text-foreground">
-              <RiDashboardLine className="h-4 w-4" style={{ color: 'hsl(36, 60%, 31%)' }} />
-              <span className="text-sm font-medium">Dashboard</span>
+            <div
+              className={`flex items-center rounded-md bg-secondary/60 text-foreground ${
+                sidebarOpen ? 'gap-2.5 px-3 py-2' : 'justify-center p-2'
+              }`}
+              title="Dashboard"
+            >
+              <RiDashboardLine className="h-4 w-4 flex-shrink-0" style={{ color: 'hsl(36, 60%, 31%)' }} />
+              {sidebarOpen && <span className="text-sm font-medium truncate">Dashboard</span>}
             </div>
           </nav>
+
           <Separator className="bg-border" />
-          <div className="p-4 space-y-3">
+
+          {/* Agent Status & Footer */}
+          <div className={`space-y-3 ${sidebarOpen ? 'p-4' : 'p-2'}`}>
             <div className="space-y-2">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Agent Status</p>
-              <div className="flex items-center gap-2">
-                <span className={`h-2 w-2 rounded-full ${activeAgentId ? 'bg-amber-400 animate-pulse' : (displayData ? 'bg-green-400' : 'bg-muted-foreground/40')}`} />
-                <span className="text-xs text-muted-foreground">
-                  {activeAgentId ? 'Processing...' : (displayData ? 'Complete' : 'Idle')}
-                </span>
+              {sidebarOpen && (
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Agent Status</p>
+              )}
+              <div className={`flex items-center ${sidebarOpen ? 'gap-2' : 'justify-center'}`} title={activeAgentId ? 'Processing...' : (displayData ? 'Complete' : 'Idle')}>
+                <span className={`h-2 w-2 rounded-full flex-shrink-0 ${activeAgentId ? 'bg-amber-400 animate-pulse' : (displayData ? 'bg-green-400' : 'bg-muted-foreground/40')}`} />
+                {sidebarOpen && (
+                  <span className="text-xs text-muted-foreground">
+                    {activeAgentId ? 'Processing...' : (displayData ? 'Complete' : 'Idle')}
+                  </span>
+                )}
               </div>
-              <p className="text-xs text-muted-foreground truncate">Customer Analytics Manager</p>
+              {sidebarOpen && (
+                <p className="text-xs text-muted-foreground truncate">Customer Analytics Manager</p>
+              )}
             </div>
             <Separator className="bg-border" />
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <RiSparklingLine className="h-3 w-3" />
-              Powered by AI
-            </p>
+            <div className={`flex items-center ${sidebarOpen ? 'gap-1' : 'justify-center'}`} title="Powered by AI">
+              <RiSparklingLine className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+              {sidebarOpen && (
+                <p className="text-xs text-muted-foreground">Powered by AI</p>
+              )}
+            </div>
           </div>
         </aside>
 
