@@ -1,0 +1,124 @@
+{
+  "agent_name": "Customer Analytics Manager",
+  "agent_id": "69a27b508e6d0e51fd5cd391",
+  "description": "Coordinates segmentation, churn analysis, and retention strategy generation; routes customer data to specialized sub-agents and aggregates their outputs into a unified analytics report",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "segmentation": {
+      "segments": [
+        {
+          "segment_name": "string",
+          "size_estimate": "string",
+          "behavioral_traits": [
+            "string"
+          ],
+          "demographic_profile": "string",
+          "avg_clv_range": "string",
+          "characteristics": [
+            "string"
+          ],
+          "description": "string"
+        }
+      ],
+      "summary": "string"
+    },
+    "churn_risk": {
+      "risk_groups": [
+        {
+          "group_name": "string",
+          "risk_score": "string",
+          "risk_level": "string",
+          "churn_indicators": [
+            "string"
+          ],
+          "warning_signs": [
+            "string"
+          ],
+          "engagement_decline": "string",
+          "recommended_action": "string"
+        }
+      ],
+      "total_at_risk": "string",
+      "average_risk_score": "string",
+      "highest_risk_segment": "string",
+      "summary": "string"
+    },
+    "retention_strategies": {
+      "strategies": [
+        {
+          "strategy_type": "string",
+          "target_segment": "string",
+          "risk_level": "string",
+          "action_steps": [
+            "string"
+          ],
+          "expected_impact": "string",
+          "detailed_tactics": "string",
+          "priority": "string"
+        }
+      ],
+      "summary": "string"
+    },
+    "executive_summary": "string"
+  },
+  "example_response": {
+    "segmentation": {
+      "segments": [
+        {
+          "segment_name": "sample string",
+          "size_estimate": "sample string",
+          "behavioral_traits": [
+            "sample string"
+          ],
+          "demographic_profile": "sample string",
+          "avg_clv_range": "sample string",
+          "characteristics": [
+            "sample string"
+          ],
+          "description": "sample string"
+        }
+      ],
+      "summary": "sample string"
+    },
+    "churn_risk": {
+      "risk_groups": [
+        {
+          "group_name": "sample string",
+          "risk_score": "sample string",
+          "risk_level": "sample string",
+          "churn_indicators": [
+            "sample string"
+          ],
+          "warning_signs": [
+            "sample string"
+          ],
+          "engagement_decline": "sample string",
+          "recommended_action": "sample string"
+        }
+      ],
+      "total_at_risk": "sample string",
+      "average_risk_score": "sample string",
+      "highest_risk_segment": "sample string",
+      "summary": "sample string"
+    },
+    "retention_strategies": {
+      "strategies": [
+        {
+          "strategy_type": "sample string",
+          "target_segment": "sample string",
+          "risk_level": "sample string",
+          "action_steps": [
+            "sample string"
+          ],
+          "expected_impact": "sample string",
+          "detailed_tactics": "sample string",
+          "priority": "sample string"
+        }
+      ],
+      "summary": "sample string"
+    },
+    "executive_summary": "sample string"
+  }
+}

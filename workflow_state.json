@@ -1,0 +1,62 @@
+{
+  "agents": [
+    {
+      "agent_id": "69a27b3900b22915dd81e149",
+      "name": "Segmentation Agent",
+      "type": "sub-agent",
+      "role": "Customer Segmentation Specialist",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.4,
+      "top_p": 1,
+      "response_schema_file": "response_schemas/segmentation_agent_response.json"
+    },
+    {
+      "agent_id": "69a27b39f18a4f26754c8ad7",
+      "name": "Churn Risk Agent",
+      "type": "sub-agent",
+      "role": "Churn Risk Analysis Specialist",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.3,
+      "top_p": 1,
+      "response_schema_file": "response_schemas/churn_risk_agent_response.json"
+    },
+    {
+      "agent_id": "69a27b3a0082f39a3a37cdc9",
+      "name": "Retention Strategy Agent",
+      "type": "sub-agent",
+      "role": "Customer Retention Strategist",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.5,
+      "top_p": 0.95,
+      "response_schema_file": "response_schemas/retention_strategy_agent_response.json"
+    },
+    {
+      "agent_id": "69a27b508e6d0e51fd5cd391",
+      "name": "Customer Analytics Manager",
+      "type": "manager",
+      "role": "Customer Analytics Coordinator",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.3,
+      "top_p": 1,
+      "managed_agents": [
+        "69a27b3900b22915dd81e149",
+        "69a27b39f18a4f26754c8ad7",
+        "69a27b3a0082f39a3a37cdc9"
+      ],
+      "response_schema_file": "response_schemas/customer_analytics_manager_response.json"
+    }
+  ],
+  "primary_agent_id": "69a27b508e6d0e51fd5cd391",
+  "pattern": "manager-subagent",
+  "capabilities": {
+    "voice": false,
+    "image_output": false,
+    "file_output": false,
+    "knowledge_base": false,
+    "scheduled": false
+  }
+}
