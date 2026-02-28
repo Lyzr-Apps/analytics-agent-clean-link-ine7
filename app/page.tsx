@@ -463,7 +463,7 @@ export default function Page() {
                     <div className="text-center space-y-3">
                       <RiBarChartLine className="h-12 w-12 mx-auto text-muted-foreground/30" />
                       <p className="text-sm text-muted-foreground">
-                        Enter your customer data above and run analysis to see insights
+                        Upload a CSV file above and run analysis to see insights
                       </p>
                       <p className="text-xs text-muted-foreground">
                         Or toggle <span className="font-medium text-foreground">Sample Data</span> to explore the dashboard
